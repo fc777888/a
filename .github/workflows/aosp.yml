@@ -1,7 +1,6 @@
 name: aosp_action
 
 on:
-  push:
   workflow_dispatch:
 defaults:
   run:
@@ -19,6 +18,6 @@ jobs:
         ls ./.github/actions/aosp-action
     - name: aosp
       uses: ./.github/actions/aosp-action
-      continue-on-error: true
+      #continue-on-error: true
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v2
