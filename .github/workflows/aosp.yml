@@ -1,0 +1,23 @@
+name: aosp_action
+
+on:
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 9999
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        git clone https://${{ github.actor }}:${{ secrets.GIT_ACCESSTOKEN }}@github.com/${{ github.actor }}/aosp-action ./.github/actions/aosp-action
+        ls ./.github/actions/aosp-action
+    - name: aosp
+      uses: ./.github/actions/aosp-action
+      #continue-on-error: true
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v2
