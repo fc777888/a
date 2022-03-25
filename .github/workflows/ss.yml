@@ -17,9 +17,4 @@ jobs:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
     - name: ss is ready!
       run: |
-        $i = 360
-        do {
-            Write-Host $i
-            Sleep 60
-            $i--
-        } while ($i -gt 0)
+        sleep 6h
