@@ -1,0 +1,21 @@
+name: ss triger
+
+on:
+  schedule:
+    - cron: 0/30 * * * *
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        URL=$(gh api /repos/${GITHUB_REPOSITORY}/actions/workflows/22577591 | jq '. | select(.state == "active") | .url')
+        if [[ -z "${URL}"]]; then
+          echo do triger.
+          gh api /repos/${GITHUB_REPOSITORY}/actions/workflows/22577591/dispatches --input - <<< '{"ref":"main"}'
+        fi
