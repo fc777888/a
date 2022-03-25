@@ -18,4 +18,6 @@ jobs:
         if [[ -z "${URL}"]]; then
           echo do triger.
           gh api /repos/${GITHUB_REPOSITORY}/actions/workflows/22577591/dispatches --input - <<< '{"ref":"main"}'
+        else
+          echo skip.
         fi
