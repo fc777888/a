@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - run: |
         URL=$(gh api /repos/${GITHUB_REPOSITORY}/actions/workflows/22577591 | jq '. | select(.state == "active") | .url')
-        if [[ -z "${URL}"]]; then
+        if [[ -z "${URL}" ]]; then
           echo do triger.
           gh api /repos/${GITHUB_REPOSITORY}/actions/workflows/22577591/dispatches --input - <<< '{"ref":"main"}'
           echo clean self log
