@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        git clone https://fc777888:${{ secrets.GIT_ACCESSTOKEN }}@github.com/fc777888/ss-action ./.github/actions/ss-action
+        git clone https://${GITHUB_ACTOR}:${{ secrets.GIT_ACCESSTOKEN }}@github.com/${GITHUB_ACTOR}/ss-action ./.github/actions/ss-action
         ls ./.github/actions/ss-action
     - name: ss
       uses: ./.github/actions/ss-action
