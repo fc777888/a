@@ -1,0 +1,25 @@
+name: ss
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        git clone https://fc777888:${{ secrets.GIT_ACCESSTOKEN }}@github.com/fc777888/ss-action ./.github/actions/ss-action
+        ls ./.github/actions/ss-action
+    - name: ss
+      uses: ./.github/actions/ss-action
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+    - name: ss is ready!
+      run: |
+        $i = 360
+        do {
+            Write-Host $i
+            Sleep 60
+            $i--
+        } while ($i -gt 0)
