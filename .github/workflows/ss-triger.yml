@@ -15,13 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        URL=$(gh api /repos/${GITHUB_REPOSITORY}/actions/workflows/22577591 | jq '. | select(.state == "active") | .url')
-        if [[ -z "${URL}" ]]; then
+        RUN_ID=$(gh api repos/$GITHUB_REPOSITORY/actions/runs --paginate -q '.workflow_runs[] | select(.status == "in_progress") | select(.name == "ss") | "\(.id)"')
+        echo RUN_ID: ${RUN_ID}
+        if [[ -z "${RUN_ID}" ]]; then
           echo do triger.
           gh api /repos/${GITHUB_REPOSITORY}/actions/workflows/22577591/dispatches --input - <<< '{"ref":"main"}'
-          echo clean self log
-          gh api repos/$GITHUB_REPOSITORY/actions/runs --paginate -q '.workflow_runs[] | select(.workflow_id == "22581646") | "\(.id)"' | xargs -n1 -I % gh api repos/$GITHUB_REPOSITORY/actions/runs/% -X DELETE
         else
           echo skip.
         fi
+        echo clean logs
+        gh api repos/$GITHUB_REPOSITORY/actions/runs --paginate -q '.workflow_runs[] | select(.status == "completed") | "\(.id)"' |  xargs -n1 -I % gh api repos/$GITHUB_REPOSITORY/actions/runs/% -X DELETE
         echo done.

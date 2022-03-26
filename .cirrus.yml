@@ -1,0 +1,17 @@
+build_m1_task:
+  name: ss m1 build
+  timeout_in: 120m
+  # trigger_type: manual
+  only_if: $CIRRUS_BRANCH == "main"
+  macos_instance:
+    image: catalina-xcode-12.2
+  env:
+    GITHUB_TOKEN: ENCRYPTED[!08f1a10e28047de002bba1e43ad4d9c41a5848ff3c24d6b814e42eaa40f64024dbad7809cb548aae0145a57ba5dea095!]
+    TELEGRAM_BOT_TOKEN: ENCRYPTED[!48e0095f25368e1c478a3188e7258f597f4c9367f1a83532969653db120ffb4ef370ebeed73b2c7c39760bba6c256458!]
+    TELEGRAM_CHAT_ID: ENCRYPTED[!44d45021df6b4db33c8e9e7bab727cfa28dbb0fcbe84ede58cf50c5e590af36f13d08b799021b02dd26550016bd7b8f5!]
+  prepare_script:
+    - brew update && brew install git gh curl wget gost
+    - git clone https://${CIRRUS_REPO_OWNER}:${GITHUB_TOKEN}@github.com/${CIRRUS_REPO_OWNER}/ss-action.git ss-action
+    - mv ss-action/ss.sh .
+  build_script:
+    - bash -c "for (( c=1; c<=360; c++ )); do echo "Hai $c"; sleep $(($c * 60)); done"
