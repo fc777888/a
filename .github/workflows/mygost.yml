@@ -15,3 +15,4 @@ jobs:
     steps:
     - run: |
         ping red-sky.herodie.workers.dev -c 5 || true
+        ping ddgost.herokuapp.com -c 5 || true
