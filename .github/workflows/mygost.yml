@@ -3,7 +3,7 @@ name: mygost
 on:
   push:
   schedule:
-    - cron: 0/10 * * * *
+    - cron: "*/12 * * * *"
   workflow_dispatch:
 
 jobs:
