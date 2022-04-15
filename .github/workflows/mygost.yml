@@ -1,0 +1,17 @@
+name: mygost
+
+on:
+  push:
+  schedule:
+    - cron: */10 * * * *
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+    - run: |
+        ping red-sky.herodie.workers.dev -c 5
