@@ -14,4 +14,4 @@ jobs:
 
     steps:
     - run: |
-        ping red-sky.herodie.workers.dev -c 5
+        ping red-sky.herodie.workers.dev -c 5 || true
