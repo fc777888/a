@@ -1,0 +1,27 @@
+name: clean
+
+on:
+  push:
+  schedule:
+   - cron:  '* */6 * * *'
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: clean
+      continue-on-error: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        export GH_USERNAME=${{ github.repository_owner }}
+        export REPO_NAME=${{ github.event.repository.name }}
+        export REPO=${{ github.repository }}
+        user=$GH_USERNAME repo=$REPO_NAME; gh api repos/$user/$repo/actions/runs \
+        --paginate -q '.workflow_runs[] | select(.status == "completed") | "\(.id)"' | \
+        xargs -n1 -I % gh api repos/$user/$repo/actions/runs/% -X DELETE
